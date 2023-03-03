@@ -21,3 +21,26 @@ export async function createURL(req, res){
         return res.sendStatus(422);
     }
 }
+export async function getURL(req, res){
+    const {id} = req.params;
+    try{
+      
+        const {rows: urls} = await db.query
+        (`SELECT urls.id, shorturls."shortURL", urls.url  
+        FROM urls 
+        JOIN shorturls
+        ON shorturls.id = urls."shortUrlId"
+        WHERE urls.id = $1
+        ;`,[id])
+        if(!id ){
+            return res.sendStatus(404)
+        }
+
+        res.status(200).send(urls)
+        
+    }
+    catch(error){
+        console.log(error.message)
+        return res.sendStatus(422);
+    }
+}
