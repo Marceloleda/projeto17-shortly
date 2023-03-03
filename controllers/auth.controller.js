@@ -17,9 +17,16 @@ export async function signUp(req, res){
 }
 
 export async function signIn(req, res){
-    const {email, password} = req.body;
+    const {hashPassword, id} = req.user;
+    const {password} = req.body;
     try{
-        res.sendStatus(201);
+        const isValid = bcrypt.compareSync(password, hashPassword) 
+        if(isValid){
+            const token = uuidv4();
+            await db.query(`INSERT INTO sessions ("userId", token) VALUES ($1, $2);`, 
+            [id, token])
+            res.status(200).send({token});
+        }
 
     }
     catch(error){

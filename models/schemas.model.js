@@ -7,10 +7,10 @@ export const signupSchema = joi.object({
 	confirmPassword: joi.ref('password')
 	});
 
-// export const signinSchema = joi.object({
-// 	email: joi.string().email().required(),
-// 	password: joi.string().required()
-// });
+export const signinSchema = joi.object({
+	email: joi.string().email().required(),
+	password: joi.string().required()
+});
 
 // export const authorizationSchema = joi.object({
 // 	authorization: joi.string().pattern(/^Bearer .*/).required()
