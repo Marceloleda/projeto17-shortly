@@ -317,12 +317,9 @@ INSERT INTO public.urls VALUES (29, 54, 'https://www.joao.com.br', 102, '2023-03
 --
 
 INSERT INTO public.users VALUES (1, 'João Silva', 'joao.silva@example.com', '123456', '2023-03-02 03:43:13.536892');
-INSERT INTO public.users VALUES (2, 'Maria Souza', 'maria.souza@example.com', 'abcdef', '2023-03-02 03:43:13.536892');
 INSERT INTO public.users VALUES (3, 'Pedro Santos', 'pedro.santos@example.com', '7890xyz', '2023-03-02 03:43:13.536892');
 INSERT INTO public.users VALUES (8, 'carlossddspo', 'maiksey@g.com', '$2b$10$KBImTGsxd.UVR7bmEMvNvO7r6F8bGY9lev6SgOZJKO2SFK9Jlj8qa', '2023-03-03 01:37:46.769531');
 INSERT INTO public.users VALUES (49, 'dada', 'ssfa@ffsfg.com', '$2b$10$kSUftLLL/ye8n6hSe.iDHeXrrLjKm5ZWFVIQF/OrVNgp4KCORaIte', '2023-03-03 04:45:02.71343');
-INSERT INTO public.users VALUES (50, 'hi', 'ssfa@fsfg.com', '$2b$10$KVEWlBIbXPl4xDHtvwB.QuH0Gh71ZOefih.z4NU1dnMnXl5WoBfxO', '2023-03-03 04:45:28.118799');
-INSERT INTO public.users VALUES (51, 'f', 'ssa@fsfg.com', '$2b$10$wxinVqUHe0g6p84J7Q6Hoe5dCQ5I.qyQmYBYwL3g0vD9lj4f04/pu', '2023-03-03 04:46:59.097939');
 INSERT INTO public.users VALUES (52, 'ipdec', 'ipdec@g.com', '$2b$10$TQv1AVkaT3jZoW5F4qwb4Ot36o/tL8DVp/3OkFgPx/OtT8ctjN/ye', '2023-03-03 04:47:28.89506');
 INSERT INTO public.users VALUES (53, 'João', 'joao@driven.com.br', '$2b$10$3gF64WmtNGZdjAolN0yImedzfjnHf.d8/7qhOzn5pfQHnGXfXwyzO', '2023-03-03 11:29:25.191694');
 INSERT INTO public.users VALUES (54, 'Pedro', 'pedro@driven.com.br', '$2b$10$XEDaMjWzEBo/EAIq3r2RzOOEacPc6wuqQRC4.yfRySxvnJ3obKDzG', '2023-03-03 11:53:19.841113');
