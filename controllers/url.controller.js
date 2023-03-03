@@ -21,10 +21,9 @@ export async function createURL(req, res){
         return res.sendStatus(422);
     }
 }
-export async function getURL(req, res){
+export async function getIdURL(req, res){
     const {id} = req.params;
     try{
-      
         const {rows: urls} = await db.query
         (`SELECT urls.id, shorturls."shortURL", urls.url  
         FROM urls 
@@ -32,12 +31,37 @@ export async function getURL(req, res){
         ON shorturls.id = urls."shortUrlId"
         WHERE urls.id = $1
         ;`,[id])
-        if(!id ){
+
+        if(!id || urls.length === 0){
             return res.sendStatus(404)
         }
-
         res.status(200).send(urls)
-        
+    }
+    catch(error){
+        console.log(error.message)
+        return res.sendStatus(422);
+    }
+}
+export async function openURL(req, res){
+    const {shortUrl} = req.params;
+    try{
+        const {rows: linkData} = await db.query(`
+        SELECT urls.id, urls."shortUrlId", shorturls."shortURL", urls.url,  shorturls."visitCount"  
+        FROM urls 
+        JOIN shorturls
+        ON shorturls.id = urls."shortUrlId"
+        WHERE shorturls."shortURL" = $1
+        ;
+        `, [shortUrl])
+
+        if (!linkData.length) {
+            return res.status(404).send('Short URL not found');
+        }
+        const id = linkData[0].shortUrlId;
+        const url = linkData[0].url;
+        await db.query(`UPDATE shorturls SET "visitCount" = "visitCount" + 1 WHERE id = $1;`,
+        [id])
+        res.redirect(url);
     }
     catch(error){
         console.log(error.message)
