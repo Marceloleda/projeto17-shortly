@@ -6,9 +6,12 @@ const { Pool } = pg;
 
 const configDatabase = {
   connectionString: process.env.DATABASE_URL,
+  ...(process.env.NODE_ENV === "production" && {
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  }),
 };
 
-if (process.env.MODE === "prod") configDatabase.ssl = true;
-console.log("conectado ao Postgres")
-
 export const db = new Pool(configDatabase);
+
