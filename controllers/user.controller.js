@@ -34,3 +34,16 @@ export async function getUsers(req, res){
         return res.sendStatus(500);
     }
 }
+export async function rank(req, res){
+    const id = req.userId
+
+    try{
+        const data = await db.query(`
+    
+       res.status(200).send(data.rows[0])
+    }
+    catch(error){
+        console.log(error.message)
+        return res.sendStatus(500);
+    }
+}
