@@ -85,7 +85,7 @@ export async function deleteURL(req, res){
             [id, user_Id]
           );
           if (result.rowCount === 0) {
-            return res.status(404).send('URL not found');
+            return res.sendStatus(401);
           }
           const shorturl = shorturlId.rows[0].shortUrlId;
 
