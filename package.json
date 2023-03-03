@@ -4,6 +4,8 @@
   "description": "",
   "main": "api.js",
   "type": "module",
+  "start": "node ./src/api.js",
+		"dev": "npx nodemon ./src/api.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
