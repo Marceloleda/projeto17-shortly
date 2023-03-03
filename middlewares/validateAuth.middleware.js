@@ -18,10 +18,10 @@ export async function validateSignUp(req, res, next){
         }
         next();
     }
-        catch(error){
-            res.sendStatus(422)
-            return
-        }
+    catch(error){
+        res.sendStatus(422)
+        return
+    }
 }
 export async function validateSignIn(req, res, next){
     const {body} = req  
@@ -41,8 +41,8 @@ export async function validateSignIn(req, res, next){
         req.user = exist[0];
         next();
     }
-        catch(error){
-            res.sendStatus(422)
-            return
-        }
+    catch(error){
+        res.sendStatus(422)
+        return
+    }
 }

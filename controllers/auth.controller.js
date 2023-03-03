@@ -27,10 +27,8 @@ export async function signIn(req, res){
             [id, token])
             res.status(200).send({token});
         }
-
     }
     catch(error){
-        console.log(error.message);
         return res.sendStatus(422);
     }
 }

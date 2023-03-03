@@ -12,10 +12,10 @@ export const signinSchema = joi.object({
 	password: joi.string().required()
 });
 
-// export const authorizationSchema = joi.object({
-// 	authorization: joi.string().pattern(/^Bearer .*/).required()
-// });
+export const authorizationSchema = joi.object({
+	authorization: joi.string().pattern(/^Bearer .*/).required()
+});
 
-// export const urlSchema = joi.object({
-// 	url: joi.string().required()
-// });
+export const urlSchema = joi.object({
+	url: joi.string().uri({scheme: ['http', 'https', 'https://'],}).required()
+});
