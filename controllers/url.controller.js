@@ -39,7 +39,7 @@ export async function getIdURL(req, res){
     }
     catch(error){
         console.log(error.message)
-        return res.sendStatus(422);
+        return res.sendStatus(500);
     }
 }
 export async function openURL(req, res){
@@ -65,6 +65,39 @@ export async function openURL(req, res){
     }
     catch(error){
         console.log(error.message)
-        return res.sendStatus(422);
+        return res.sendStatus(500);
+    }
+}
+export async function deleteURL(req, res){
+    const {id} = req.params;
+    const user_Id = req.userId
+    try{
+        const shorturlId = await db.query(`
+        SELECT urls."userId", urls."shortUrlId"
+        FROM urls 
+        JOIN shorturls
+        ON shorturls.id = urls."shortUrlId"
+        WHERE urls.id = $1
+        ;`, [id])
+
+        const result = await db.query(
+            'DELETE FROM urls WHERE id = $1 AND "userId" = $2',
+            [id, user_Id]
+          );
+          if (result.rowCount === 0) {
+            return res.status(404).send('URL not found');
+          }
+          const shorturl = shorturlId.rows[0].shortUrlId;
+
+          await db.query(
+            'DELETE FROM shorturls WHERE id = $1',
+            [shorturl]
+          );
+
+        res.sendStatus(204)
+    }
+    catch(error){
+        console.log(error.message)
+        return res.sendStatus(500);
     }
 }
