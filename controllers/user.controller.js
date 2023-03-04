@@ -6,7 +6,7 @@ export async function getUsers(req, res){
     try{
         const data = await db.query(`
         SELECT result
-    FROM (
+        FROM (
         SELECT JSON_BUILD_OBJECT (
         'id', users.id,
         'name', users.name,

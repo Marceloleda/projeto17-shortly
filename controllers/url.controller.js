@@ -69,35 +69,48 @@ export async function openURL(req, res){
     }
 }
 export async function deleteURL(req, res){
-    const {id} = req.params;
-    const user_Id = req.userId
-    try{
-        const shorturlId = await db.query(`
+    const { id } = req.params;
+    const user_Id = req.userId;
+    try {
+        const isValid = await db.query(`SELECT * FROM urls WHERE "userId" = $1;`, [user_Id]);
+        const id_param = await db.query(`SELECT * FROM urls WHERE id = $1;`, [id]);
+
+        const valid = isValid.rows[0].userId;
+        const param = id_param.rows[0]?.userId;
+
+    if (!param) {
+        return res.sendStatus(404);
+    }
+    if (valid !== param) {
+        return res.sendStatus(401);
+    }
+
+    const shorturlId = await db.query(`
         SELECT urls."userId", urls."shortUrlId"
         FROM urls 
         JOIN shorturls
         ON shorturls.id = urls."shortUrlId"
         WHERE urls.id = $1
-        ;`, [id])
+        ;`, [id]);
 
-        const result = await db.query(
-            'DELETE FROM urls WHERE id = $1 AND "userId" = $2',
-            [id, user_Id]
-          );
-          if (result.rowCount === 0) {
-            return res.sendStatus(401);
-          }
-          const shorturl = shorturlId.rows[0].shortUrlId;
+    const result = await db.query(
+        'DELETE FROM urls WHERE id = $1 AND "userId" = $2;',
+        [id, user_Id]
+    );
 
-          await db.query(
-            'DELETE FROM shorturls WHERE id = $1',
-            [shorturl]
-          );
-
-        res.sendStatus(204)
+    if (result.rowCount === 0) {
+        return res.status(404).send('URL not found');
     }
-    catch(error){
-        console.log(error.message)
+    const shorturl = shorturlId.rows[0].shortUrlId;
+
+    await db.query(
+        'DELETE FROM shorturls WHERE id = $1',
+        [shorturl]
+    );
+
+    res.sendStatus(204);
+    } catch (error) {
+        console.log(error.message);
         return res.sendStatus(500);
     }
 }
