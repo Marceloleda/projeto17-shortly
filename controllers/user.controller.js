@@ -5,20 +5,18 @@ export async function getUsers(req, res){
 
     try{
         const data = await db.query(`
-        SELECT result
-        FROM (
         SELECT JSON_BUILD_OBJECT (
-        'id', users.id,
-        'name', users.name,
-        'visitCount', SUM(shorturls."visitCount"),
-        'shortenedUrls', JSON_AGG(
-            JSON_BUILD_OBJECT(
-                'id', shorturls.id,
-                'shortUrl', shorturls."shortURL",
-                'url', urls.url,
-                'visitCount', shorturls."visitCount"
+            'id', users.id,
+            'name', users.name,
+            'visitCount', SUM(shorturls."visitCount"),
+            'shortenedUrls', JSON_AGG(
+                JSON_BUILD_OBJECT(
+                    'id', shorturls.id,
+                    'shortUrl', shorturls."shortURL",
+                    'url', urls.url,
+                    'visitCount', shorturls."visitCount"
+                )
             )
-        )
         ) AS result
         FROM users
         JOIN urls 
@@ -27,10 +25,8 @@ export async function getUsers(req, res){
             ON shorturls.id = urls."shortUrlId"
         WHERE users.id = $1
         GROUP BY users.id
-        ) AS user_info;
-
         ;`, [id])
-       res.status(200).send(data.rows[0])
+       res.status(200).send(data.rows[0].result)
     }
     catch(error){
         console.log(error.message)
